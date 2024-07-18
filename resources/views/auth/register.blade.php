@@ -60,7 +60,7 @@
                     <!-- Name -->
                     <div class="col-span-6 sm:col-span-3">
                       <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                      <input type="text" id="name" name="name" class="mt-1 w-full rounded-md border-black focus:ring-abu-tua bg-white text-sm text-gray-700 shadow-sm" value="{{ old('name') }}" required autofocus autocomplete="name" />
+                      <input type="text" id="name" name="name" class="mt-1 w-full rounded-md border-black focus:ring-black bg-white text-sm text-gray-700 shadow-sm" value="{{ old('name') }}" required autofocus autocomplete="name" />
                       <x-input-error :messages="$errors->get('name')" class="mt-2" />
                   </div>
 
@@ -70,7 +70,7 @@
                       Username
                     </label>
 
-                    <input type="text" id="username" name="username" class="mt-1 w-full rounded-md focus:ring-abu-tua border-black bg-white text-sm text-gray-700 shadow-sm" value="{{ old('username') }}" required/>
+                    <input type="text" id="username" name="username" class="mt-1 w-full rounded-md focus:ring-black border-black bg-white text-sm text-gray-700 shadow-sm" value="{{ old('username') }}" required/>
                     <x-input-error :messages="$errors->get('username')" class="mt-2" />
                   </div>
 
@@ -81,7 +81,7 @@
                         type="email"
                         id="email"
                         name="email"
-                        class="mt-1 w-full rounded-md border-black bg-white focus:ring-abu-tua text-sm text-gray-700 shadow-sm"
+                        class="mt-1 w-full rounded-md border-black bg-white focus:ring-black text-sm text-gray-700 shadow-sm"
                         value="{{ old('email') }}"
                         required
                         autocomplete="username" />
@@ -96,7 +96,7 @@
                         type="password"
                         id="password"
                         name="password"
-                        class="mt-1 w-full rounded-md border-black bg-white focus:ring-abu-tua text-sm text-gray-700 shadow-sm"
+                        class="mt-1 w-full rounded-md border-black bg-white focus:ring-black text-sm text-gray-700 shadow-sm"
                         required
                         autocomplete="new-password" />
 
@@ -111,7 +111,7 @@
                         type="password"
                         id="password_confirmation"
                         name="password_confirmation"
-                        class="mt-1 w-full rounded-md border-black bg-white focus:ring-abu-tua text-sm text-gray-700 shadow-sm"
+                        class="mt-1 w-full rounded-md border-black bg-white focus:ring-black text-sm text-gray-700 shadow-sm"
                         required autocomplete="new-password" />
 
                       <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
@@ -129,14 +129,14 @@
                   <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
                       <button 
                         type="submit"
-                        class="inline-block shrink-0 rounded-md border border-abu-tua bg-abu-tua px-12 py-3 text-sm font-medium text-white transition hover:bg-abu-muda hover:text-white focus:outline-none focus:ring active:text-abu-muda"
+                        class="inline-block shrink-0 rounded-md border border-black bg-black px-12 py-3 text-sm font-medium text-white transition hover:bg-gray-500 hover:text-white focus:outline-none focus:ring active:text-gray-500"
                       >
                         Create an account
                       </button>
 
                       <p class="mt-4 text-sm text-gray-500 sm:mt-0">
                         Already have an account?
-                        <a href="{{ route('login') }}" class="text-gray-700 underline">Log in</a>.
+                        <a href="{{ route('login') }}" class="text-black underline font-semibold">Log in</a>.
                       </p>
                   </div>
                 </form>

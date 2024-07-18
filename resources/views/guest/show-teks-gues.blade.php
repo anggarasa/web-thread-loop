@@ -9,7 +9,7 @@
   </div>
 
   <div class="mt-32 px-2 mb-12 md:px-5 lg:px-12 xl:px-20">
-      <div class="max-w-4xl w-full px-2 md:px-10 lg:px-16 py-5 border-b rounded-lg shadow-md dark:bg-gray-800 mx-auto">
+      <div class="max-w-4xl w-full px-2 md:px-10 lg:px-16 py-5 border-b rounded-lg shadow-md mx-auto">
           <div class="flex flex-col md:flex-row items-center justify-between">
               <div class="flex items-center">
                   @if ($tek->user->profile_image)
@@ -17,9 +17,9 @@
                   @else
                       <img class="object-cover mr-4 w-10 h-10 rounded-full" src="/imgs/avatar.png" alt="{{ $tek->user->username }}">
                   @endif
-                  <a href="/profile-user-guest/{{ $tek->user->username }}" class="font-bold text-gray-700 cursor-pointer dark:text-gray-200" tabindex="0" role="link">{{ $tek->user->username }}</a>
+                  <a href="/profile-user-guest/{{ $tek->user->username }}" class="font-bold text-gray-700 cursor-pointer" tabindex="0" role="link">{{ $tek->user->username }}</a>
               </div>
-              <span class="text-sm font-light text-gray-600 dark:text-gray-400">{{ $tek->created_at->diffForHumans() }}</span>
+              <span class="text-sm font-light text-gray-700">{{ $tek->created_at->diffForHumans() }}</span>
           </div>
 
           <div class="flex items-center justify-center mt-4 md:mt-6">
@@ -41,7 +41,7 @@
           </div>
 
           <div class="mt-4">
-              <p class="text-gray-800 text-base md:text-lg dark:text-gray-200">{{ $tek->deskripsi }}</p>
+              <p class="text-gray-800 text-base md:text-lg">{{ $tek->deskripsi }}</p>
           </div>
 
           <div class="flex items-center justify-start mt-6">
@@ -59,8 +59,8 @@
           </div>
 
           <!-- Komentar -->
-          <div id="komentar" class="mt-10 mb-5 pb-1 border-b dark:border-gray-600">
-              <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Komentar</h4>
+          <div id="komentar" class="mt-10 mb-5 pb-1 border-b">
+              <h4 class="text-lg font-semibold text-gray-900">Komentar</h4>
               <div class="comments-container" id="comments-container-{{ $tek->id }}">
                   @forelse ($tek->comments as $comment)
                       <div class="mt-4">
@@ -71,13 +71,13 @@
                                   <img class="object-cover mr-4 w-10 h-10 rounded-full" src="/imgs/avatar.png" alt="{{ $comment->user->username }}">
                               @endif
                               <div>
-                                  <a href="/profile-user-guest/{{ $comment->user->username }}" class="font-bold text-gray-700 dark:text-gray-200">{{ $comment->user->username }}</a>
-                                  <p class="text-sm text-gray-500 dark:text-gray-400">{{ $comment->content }}</p>
+                                  <a href="/profile-user-guest/{{ $comment->user->username }}" class="font-bold text-gray-700">{{ $comment->user->username }}</a>
+                                  <p class="text-sm text-gray-500">{{ $comment->content }}</p>
                               </div>
                           </div>
                       </div>
                   @empty
-                      <p class="mt-4 text-sm text-gray-500 dark:text-gray-400 no-comments">Belum ada komentar.</p>
+                      <p class="mt-4 text-sm text-gray-500 no-comments">Belum ada komentar.</p>
                   @endforelse
               </div>
           </div>

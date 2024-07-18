@@ -30,7 +30,7 @@
                 @else
                     <!-- Menampilkan tombol follow/unfollow jika pengguna melihat profil pengguna lain -->
                     @if (auth()->user()->isFollowing($user->id))
-                        <button class="unfollow-btn text-white bg-abu-tua hover:bg-gray-600 rounded-lg py-2 px-4" data-id="{{ $user->id }}" data-username="{{ $user->username }}">Diikuti</button>
+                        <button class="unfollow-btn text-white bg-black hover:bg-gray-600 rounded-lg py-2 px-4" data-id="{{ $user->id }}" data-username="{{ $user->username }}">Diikuti</button>
                     @else
                         <button class="follow-btn text-white bg-blue-500 hover:bg-blue-400 rounded-lg py-2 px-4" data-id="{{ $user->id }}" data-username="{{ $user->username }}">Ikuti</button>
                     @endif
@@ -38,18 +38,18 @@
             </div>
     
             <!-- Dropdown menu -->
-            <div id="dropdownSettings" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+            <div id="dropdownSettings" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownMenuIconButton">
                 <li>
-                    <a href="{{ route('edit-password') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit Password</a>
+                    <a href="{{ route('edit-password') }}" class="block px-4 py-2 hover:bg-gray-100">Edit Password</a>
                 </li>
                 <li>
-                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit Profile</a>
+                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 hover:bg-gray-100">Edit Profile</a>
                 </li>
                 <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="block text-red-600 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log out</button>
+                        <button type="submit" class="block text-red-600 px-4 py-2 hover:bg-gray-100">Log out</button>
                     </form>
                 </li>
                 </ul>
@@ -69,13 +69,13 @@
         <div id="modal-followers" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-md max-h-full">
                 <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="relative bg-white rounded-lg shadow">
                     <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                        <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                        <h3 class="text-xl font-medium text-gray-900">
                             Followers
                         </h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modal-followers">
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="modal-followers">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                             </svg>
@@ -100,7 +100,7 @@
                                 </div>
                             </div>
                             @if (auth()->user()->isFollowing($follower->id))
-                                <button class="unfollow-btn text-white bg-abu-tua hover:bg-gray-600 px-4 py-1 rounded" data-id="{{ $follower->id }}" data-username="{{ $follower->username }}">Diikuti</button>
+                                <button class="unfollow-btn text-white bg-black hover:bg-gray-600 px-4 py-1 rounded" data-id="{{ $follower->id }}" data-username="{{ $follower->username }}">Diikuti</button>
                             @else
                                 <button class="follow-btn text-white bg-blue-500 hover:bg-blue-400 px-4 py-1 rounded" data-id="{{ $follower->id }}" data-username="{{ $follower->username }}">Ikuti</button>
                             @endif
@@ -115,13 +115,13 @@
         <div id="modal-following" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-md max-h-full">
                 <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="relative bg-white rounded-lg shadow">
                     <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                        <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                        <h3 class="text-xl font-medium text-gray-900">
                             Followers
                         </h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modal-following">
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="modal-following">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                             </svg>
@@ -146,7 +146,7 @@
                                 </div>
                             </div>
                             @if (auth()->user()->isFollowing($follower->id))
-                                <button class="unfollow-btn text-white bg-abu-tua hover:bg-gray-600 px-4 py-1 rounded" data-id="{{ $follower->id }}" data-username="{{ $follower->username }}">Diikuti</button>
+                                <button class="unfollow-btn text-white bg-black hover:bg-gray-600 px-4 py-1 rounded" data-id="{{ $follower->id }}" data-username="{{ $follower->username }}">Diikuti</button>
                             @else
                                 <button class="follow-btn text-white bg-blue-500 hover:bg-blue-400 px-4 py-1 rounded" data-id="{{ $follower->id }}" data-username="{{ $follower->username }}">Ikuti</button>
                             @endif
@@ -181,7 +181,7 @@
     <div class="text-center p-10 border-t mt-4">
         <p class="text-lg font-semibold">Berbagi Foto</p>
         <p>Saat Anda membagikan foto, ini akan muncul di profil Anda.</p>
-        <button type="button" data-modal-toggle="modalPosting" data-modal-target="modalPosting" class="bg-abu-tua text-white py-2 px-4 rounded mt-4">Bagikan foto pertama Anda</button>
+        <button type="button" data-modal-toggle="modalPosting" data-modal-target="modalPosting" class="bg-black text-white py-2 px-4 rounded mt-4">Bagikan foto pertama Anda</button>
     </div>
     @else
     <div id="content" class="container mx-auto py-8">
@@ -236,7 +236,7 @@
               content.innerHTML = `
                 <div class="grid grid-cols-1 gap-6">
                     @foreach($teks as $tek)
-                        <div class="max-w-4xl min-w-full px-2 md:px-10 lg:px-16 py-5 bg-white border border-black rounded-lg shadow-md dark:bg-gray-800 mx-auto">
+                        <div class="max-w-4xl min-w-full px-2 md:px-10 lg:px-16 py-5 bg-white border border-black rounded-lg shadow-md">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
                                     @if ($tek->user->profile_image)
@@ -244,13 +244,13 @@
                                     @else
                                         <img class="object-cover mr-4 w-10 h-10 rounded-full" src="/imgs/avatar.png" alt="{{ $tek->user->username }}">
                                     @endif
-                                    <a class="font-bold text-gray-700 cursor-pointer dark:text-gray-200" tabindex="0" role="link">{{ $tek->user->username }}</a>
+                                    <a class="font-bold text-gray-700 cursor-pointer" tabindex="0" role="link">{{ $tek->user->username }}</a>
                                 </div>
-                                <span class="text-sm font-light text-gray-600 dark:text-gray-400">{{ $tek->created_at->diffForHumans() }}</span>
+                                <span class="text-sm font-light text-gray-600">{{ $tek->created_at->diffForHumans() }}</span>
                             </div>
 
-                            <a href="/showTeks/{{ $tek->slug }}" class="mb-5 pb-1 dark:border-gray-600">
-                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                            <a href="/showTeks/{{ $tek->slug }}" class="mb-5 pb-1">
+                                <p class="text-base leading-relaxed text-gray-500">
                                     {{ $tek->deskripsi }}
                                 </p>
                             </a>
@@ -273,7 +273,7 @@
                                         <form action="{{ route('posting.destroy', $tek->id) }}" method="POST" onsubmit="return confirmDelete(event)">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="deletePost({{ $tek->id }})" class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-600">Hapus</button>
+                                            <button type="submit" onclick="deletePost({{ $tek->id }})" class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Hapus</button>
                                         </form>
                                     @endif
                                 </div>
@@ -327,7 +327,7 @@
                 success: function(response) {
                     if (response.success) {
                         // Update UI to change follow button to unfollow button
-                        $('.follow-btn[data-id="' + userId + '"]').removeClass('follow-btn text-white bg-blue-500 hover:bg-blue-400').addClass('unfollow-btn text-white bg-abu-tua hover:bg-gray-600').text('Diikuti');
+                        $('.follow-btn[data-id="' + userId + '"]').removeClass('follow-btn text-white bg-blue-500 hover:bg-blue-400').addClass('unfollow-btn text-white bg-black hover:bg-gray-600').text('Diikuti');
                     } else {
                         console.log(response.message);
                     }
@@ -361,7 +361,7 @@
                         success: function(response) {
                             if (response.success) {
                                 // Update UI to change unfollow button to follow button
-                                $('.unfollow-btn[data-id="' + userId + '"]').removeClass('unfollow-btn text-white bg-abu-tua hover:bg-gray-600').addClass('follow-btn text-white bg-blue-500 hover:bg-blue-400').text('Ikuti');
+                                $('.unfollow-btn[data-id="' + userId + '"]').removeClass('unfollow-btn text-white bg-black hover:bg-gray-600').addClass('follow-btn text-white bg-blue-500 hover:bg-blue-400').text('Ikuti');
                             } else {
                                 console.log(response.message);
                             }

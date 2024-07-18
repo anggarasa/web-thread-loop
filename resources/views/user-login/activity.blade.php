@@ -44,7 +44,7 @@
                 </div>
                 @if ($activity->type == 'follow')
                     @if (auth()->user()->isFollowing($activity->user->id))
-                        <button class="unfollow-btn text-white bg-abu-tua hover:bg-gray-600 px-4 py-1 rounded" data-id="{{ $activity->user->id }}" data-username="{{ $activity->user->username }}">Diikuti</button>
+                        <button class="unfollow-btn text-white bg-black hover:bg-gray-600 px-4 py-1 rounded" data-id="{{ $activity->user->id }}" data-username="{{ $activity->user->username }}">Diikuti</button>
                     @else
                         <button class="follow-btn text-white bg-blue-500 hover:bg-blue-400 px-4 py-1 rounded" data-id="{{ $activity->user->id }}" data-username="{{ $activity->user->username }}">Ikuti balik</button>
                     @endif
@@ -75,7 +75,7 @@
               success: function(response) {
                   if (response.success) {
                       // Update UI to change follow button to unfollow button
-                      $('.follow-btn[data-id="' + userId + '"]').removeClass('follow-btn text-white bg-blue-500 hover:bg-blue-400').addClass('unfollow-btn text-white bg-abu-tua hover:bg-gray-600').text('Diikuti');
+                      $('.follow-btn[data-id="' + userId + '"]').removeClass('follow-btn text-white bg-blue-500 hover:bg-blue-400').addClass('unfollow-btn text-white bg-black hover:bg-gray-600').text('Diikuti');
                   } else {
                       console.log(response.message);
                   }
@@ -109,7 +109,7 @@
                       success: function(response) {
                           if (response.success) {
                               // Update UI to change unfollow button to follow button
-                              $('.unfollow-btn[data-id="' + userId + '"]').removeClass('unfollow-btn text-white bg-abu-tua hover:bg-gray-600').addClass('follow-btn text-white bg-blue-500 hover:bg-blue-400').text('Ikuti');
+                              $('.unfollow-btn[data-id="' + userId + '"]').removeClass('unfollow-btn text-white bg-black hover:bg-gray-600').addClass('follow-btn text-white bg-blue-500 hover:bg-blue-400').text('Ikuti');
                           } else {
                               console.log(response.message);
                           }

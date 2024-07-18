@@ -22,7 +22,7 @@
               @else
               <img src="/imgs/avatar.png" alt="{{ auth()->user()->username }}" class="w-10 h-10 rounded-full">
               @endif
-              <span class="ml-2 font-bold">{{ auth()->user()->username }}</span>
+              <a href="/profile-user/{{ auth()->user()->username }}" class="ml-2 font-bold">{{ auth()->user()->username }}</a>
             </div>
 
             <!-- Preview Section -->
@@ -34,7 +34,7 @@
               </button>
             </div>
 
-            <textarea name="deskripsi" class="w-full p-2 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-abu-muda" placeholder="Mulai utas..." required></textarea>
+            <textarea name="deskripsi" class="w-full p-2 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="Mulai utas..." required></textarea>
 
             <!-- File Upload Buttons -->
             <div class="flex justify-between items-center mt-2">
@@ -50,7 +50,7 @@
               </div>
             </div>
 
-            <button class="w-full mt-4 py-2 bg-abu-tua text-white rounded-lg hover:bg-abu-muda">Kirim</button>
+            <button class="w-full mt-4 py-2 bg-black text-white rounded-lg hover:bg-gray-500">Kirim</button>
           </div>
         </div>
       </form>

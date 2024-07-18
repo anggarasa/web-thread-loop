@@ -2,13 +2,13 @@
 <div id="showUser{{ $post->id }}" data-modal-backdrop="static" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full">
   <div class="relative w-full max-w-6xl max-h-full mx-auto">
     <!-- Modal content -->
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+    <div class="relative bg-white rounded-lg shadow">
       <!-- Modal header -->
-      <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+      <div class="flex items-center justify-between p-4 border-b rounded-t">
+        <h3 class="text-xl font-semibold text-gray-900">
           Detail Postingan
         </h3>
-        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="showUser{{ $post->id }}">
+        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center" data-modal-hide="showUser{{ $post->id }}">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
@@ -27,20 +27,20 @@
           @endif
         </div>
         <div class="md:w-full mt-4 md:mt-0 md:ml-5">
-          <div class="flex items-center justify-between mb-5 border-b pb-4 dark:border-gray-600">
+          <div class="flex items-center justify-between mb-5 border-b pb-4">
             <div class="flex items-center">
               @if ($post->user->profile_image)
               <img class="object-cover mr-4 w-10 h-10 rounded-full" src="{{ asset('storage/'. $post->user->profile_image) }}" alt="{{ $post->user->username }}">
               @else
                 <img class="object-cover mr-4 w-10 h-10 rounded-full" src="/imgs/avatar.png" alt="{{ $post->user->username }}">
               @endif
-              <a href="/profile-user/{{ $post->user->username }}" class="font-bold text-gray-700 cursor-pointer dark:text-gray-200 mr-2" tabindex="0" role="link">{{ $post->user->username }}</a>
+              <a href="/profile-user/{{ $post->user->username }}" class="font-bold text-gray-700 cursor-pointer mr-2" tabindex="0" role="link">{{ $post->user->username }}</a>
             </div>
             @if (Auth::check() && $post->user_id == Auth::id())
             <form action="{{ route('posting.destroy', $post->id) }}" method="POST" onsubmit="return confirmDelete(event)">
               @csrf
               @method('DELETE')
-              <button type="submit" class="inline-flex items-center text-white bg-red-600 hover:bg-red-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+              <button type="submit" class="inline-flex items-center text-white bg-red-600 hover:bg-red-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 <svg aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                 Delete
               </button>
@@ -48,14 +48,14 @@
             @endif
           </div>
           <div class="overflow-y-scroll max-h-[30vh]">
-            <div class="mb-5 pb-1 dark:border-gray-600">
-              <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+            <div class="mb-5 pb-1">
+              <p class="text-base leading-relaxed text-gray-500">
                 {{ $post->deskripsi }}
               </p>
             </div>
             <!-- Komentar -->
-            <div class="mb-5 pb-1 dark:border-gray-600">
-              <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Komentar</h4>
+            <div class="mb-5 pb-1">
+              <h4 class="text-lg font-semibold text-gray-900">Komentar</h4>
               <div class="comments-container" id="comments-container-{{ $post->id }}">
                   @forelse ($post->comments as $comment)
                       <div class="mt-4">
@@ -66,19 +66,19 @@
                                   <img class="object-cover mr-4 w-10 h-10 rounded-full" src="/imgs/avatar.png" alt="{{ $comment->user->username }}">
                               @endif
                               <div>
-                                  <a href="/profile-user/{{ $comment->user->username }}" class="font-bold text-gray-700 dark:text-gray-200">{{ $comment->user->username }}</a>
-                                  <p class="text-sm text-gray-500 dark:text-gray-400">{{ $comment->content }}</p>
+                                  <a href="/profile-user/{{ $comment->user->username }}" class="font-bold text-gray-700">{{ $comment->user->username }}</a>
+                                  <p class="text-sm text-gray-500">{{ $comment->content }}</p>
                               </div>
                           </div>
                       </div>
                   @empty
-                      <p class="mt-4 text-sm text-gray-500 dark:text-gray-400 no-comments">Belum ada komentar.</p>
+                      <p class="mt-4 text-sm text-gray-500 no-comments">Belum ada komentar.</p>
                   @endforelse
               </div>
             </div>          
           </div>
           <!-- Form Komentar -->
-          <div class="border-t pt-4 dark:border-gray-600">
+          <div class="border-t pt-4">
             {{-- @php
                 $isLiked = $post->isLikedByUser();
             @endphp --}}
@@ -94,10 +94,10 @@
             <form class="comment-form mt-5" data-post-id="{{ $post->id }}">
               @csrf
               <label for="content-{{ $post->id }}" class="sr-only">Your comment</label>
-              <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+              <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50">
                 <input type="hidden" name="posting_id" value="{{ $post->id }}">
-                <textarea id="content-{{ $post->id }}" name="content" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your comment..." required></textarea>
-                <button type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
+                <textarea id="content-{{ $post->id }}" name="content" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-500 focus:ring-black focus:border-black" placeholder="Your comment..." required></textarea>
+                <button type="submit" class="inline-flex justify-center p-2 text-black rounded-full cursor-pointer hover:bg-blue-100">
                   <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                     <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"/>
                   </svg>
@@ -137,8 +137,8 @@
                     <div class="flex items-start">
                         <img class="object-cover mr-4 w-10 h-10 rounded-full" src="${user.profile_image ? '/storage/' + user.profile_image : '/imgs/avatar.png'}" alt="${user.username}">
                         <div>
-                            <p class="font-bold text-gray-700 dark:text-gray-200">${user.username}</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">${newComment.content}</p>
+                            <p class="font-bold text-gray-700">${user.username}</p>
+                            <p class="text-sm text-gray-500">${newComment.content}</p>
                         </div>
                     </div>
                 `;
