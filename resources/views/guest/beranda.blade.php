@@ -32,7 +32,6 @@
                   @elseif (Str::endsWith($posting->posting_video, '.mp4'))
                       <video
                       controls
-                      muted
                       class="h-2/5 w-full lg:w-2/5 rounded-lg"
                       >
                       <source src="{{ asset('storage/'. $posting->posting_video) }}" type="video/mp4">
@@ -74,7 +73,7 @@
 
               <div class=" p-4 rounded-b-lg border-b border-black sm:p-6">
                   <a href="showTeks-guest/{{ $posting->slug }}" class=" line-clamp-3 text-md/relaxed text-gray-700">
-                      {{ Str::limit($posting->deskripsi, 150) }}
+                      {{ Str::limit($posting->deskripsi, 500) }}
                   </a>
 
                   <div class="flex mt-5 items-center">

@@ -73,7 +73,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                         <h3 class="text-xl font-medium text-gray-900">
-                            Followers
+                            Pengikut
                         </h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="modal-followers">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -119,7 +119,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                         <h3 class="text-xl font-medium text-gray-900">
-                            Followers
+                            Diikuti
                         </h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="modal-following">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -251,7 +251,7 @@
 
                             <a href="/showTeks/{{ $tek->slug }}" class="mb-5 pb-1">
                                 <p class="text-base leading-relaxed text-gray-500">
-                                    {{ $tek->deskripsi }}
+                                    {{ Str::limit($tek->deskripsi, 350) }}
                                 </p>
                             </a>
 

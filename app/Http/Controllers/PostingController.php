@@ -20,7 +20,7 @@ class PostingController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'deskripsi' => 'required|max:500',
+            'deskripsi' => 'required',
             'posting_image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:51200', // 50MB for images
             'posting_video' => 'nullable|file|mimes:mp4,mov,ogg,qt|max:102400', // 100MB for videos
         ]);

@@ -203,7 +203,7 @@
 
                             <a href="/showTeks-guest/{{ $tek->slug }}" class="mb-5 pb-1">
                                 <p class="text-base leading-relaxed text-gray-500">
-                                    {{ $tek->deskripsi }}
+                                    {{ Str::limit($tek->deskripsi, 350) }}
                                 </p>
                             </a>
 

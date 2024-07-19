@@ -26,11 +26,18 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('angga123')
         ]);
         
+        // $wiwi = User::factory()->create([
+        //     'name' => 'Neng wiwi',
+        //     'username' => 'Neng_wiwi',
+        //     'email' => 'wiwi@gmail.com',
+        //     'password' => bcrypt('nengwiwi123')
+        // ]);
+        
         $wiwi = User::factory()->create([
-            'name' => 'Neng wiwi',
-            'username' => 'Neng_wiwi',
-            'email' => 'wiwi@gmail.com',
-            'password' => bcrypt('nengwiwi123')
+            'name' => 'Mendi Roy',
+            'username' => 'M_roy',
+            'email' => 'roy@gmail.com',
+            'password' => bcrypt('ujicoba')
         ]);
 
         User::factory(10)->create();
