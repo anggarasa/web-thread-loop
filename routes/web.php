@@ -42,7 +42,7 @@ Route::middleware('guest')->group(function() {
     // profile-user-guest
     Route::get('/profile-user-guest/{user:username}', function (User $user) {
         $posts = Posting::with('comments.user', 'user', 'likes')->where('user_id', $user->id)->latest()->get();
-        $teks = Posting::select('deskripsi', 'slug', 'created_at', 'user_id', 'id')
+        $teks = Posting::select('deskripsi', 'excerpt', 'slug', 'created_at', 'user_id', 'id')
             ->where('user_id', $user->id)
             ->whereNull('posting_image')
             ->whereNull('posting_video')
@@ -75,7 +75,7 @@ Route::middleware(['auth', 'verified', 'web', CheckNewActivities::class])->group
     Route::get('/profile-user', function () {
         $user = Auth::user();
         $posts = Posting::with('comments.user', 'user', 'likes')->where('user_id', auth()->id())->latest()->get();
-        $teks = Posting::select('deskripsi', 'slug', 'created_at', 'user_id', 'id')
+        $teks = Posting::select('deskripsi', 'excerpt', 'slug', 'created_at', 'user_id', 'id')
             ->where('user_id', auth()->id())
             ->whereNull('posting_image')
             ->whereNull('posting_video')
@@ -89,7 +89,7 @@ Route::middleware(['auth', 'verified', 'web', CheckNewActivities::class])->group
     // mengunjungi profile seseorang
     Route::get('/profile-user/{user:username}', function (User $user) {
         $posts = Posting::with('comments.user', 'user', 'likes')->where('user_id', $user->id)->latest()->get();
-        $teks = Posting::select('deskripsi', 'slug', 'created_at', 'user_id', 'id')
+        $teks = Posting::select('deskripsi', 'excerpt', 'slug', 'created_at', 'user_id', 'id')
             ->where('user_id', $user->id)
             ->whereNull('posting_image')
             ->whereNull('posting_video')

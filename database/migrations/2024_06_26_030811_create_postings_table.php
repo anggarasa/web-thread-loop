@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('posting_image')->nullable();
             $table->string('posting_video')->nullable();
+            $table->text('excerpt');
             $table->text('deskripsi');
             $table->timestamps();
         });

@@ -41,11 +41,14 @@ class PostingController extends Controller
 
             // Generate a random slug
             $slug = Str::uuid();
+
+            $excerpt = Str::limit(strip_tags($request->deskripsi), 350);
             
             $post = Posting::create([
                 'user_id' => auth()->id(),
                 'deskripsi' => $request->deskripsi,
                 'slug' => $slug,
+                'excerpt' => $excerpt,
                 'posting_image' => $pathimage,
                 'posting_video' => $pathvideo
             ]);

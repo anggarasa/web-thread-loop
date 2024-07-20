@@ -7,7 +7,7 @@
 
   <title>ThreadLoop</title>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+  {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
@@ -71,7 +71,7 @@
                 },
                 plugins: [require("flowbite/plugin")],
             }
-        </script>
+        </script> --}}
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
 
@@ -84,7 +84,7 @@
   <footer class="text-center p-4">
       <p>&copy; 2024 ThreadLoop. All rights reserved.</p>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+  {{-- <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script> --}}
   <script>
       // Mengarahkan ke halaman utama setelah beberapa detik
       setTimeout(function() {

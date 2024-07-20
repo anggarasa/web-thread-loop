@@ -34,9 +34,9 @@
                   <div class="flex items-center justify-between my-4">
                     <div class="flex items-center">
                       @if ($posting->user->profile_image)
-                        <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
+                        <img class="w-8 h-8 rounded-full object-cover mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
                       @else
-                        <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
+                        <img class="w-8 h-8 rounded-full object-cover mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
                       @endif
                       <a href="/profile-user-guest/{{ $posting->user->username }}" class="font-bold text-gray-700 cursor-pointer" tabindex="0" role="link">{{ $posting->user->username }}</a>
                     </div>
@@ -68,7 +68,7 @@
                       </a>
                     </div>
                     <a href="/showTeks-guest/{{ $posting->slug }}" class="cursor-pointer line-clamp-3 text-md/relaxed text-gray-500">
-                      {{ Str::limit($posting->deskripsi, 150) }}
+                      {!! Str::limit($posting->deskripsi, 350) !!}
                     </a>
                   </div>
                 </article>
@@ -77,9 +77,9 @@
                   <div class="flex items-center justify-between my-4">
                     <div class="flex items-center">
                       @if ($posting->user->profile_image)
-                        <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
+                        <img class="w-8 h-8 rounded-full mr-4 object-cover avatar" data-tippy-content="{{ $posting->user->name }}" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
                       @else
-                        <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
+                        <img class="w-8 h-8 rounded-full object-cover mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
                       @endif
                       <a href="/profile-user-guest/{{ $posting->user->username }}" class="font-bold text-gray-700 cursor-pointer" tabindex="0" role="link">{{ $posting->user->username }}</a>
                     </div>
@@ -88,7 +88,7 @@
         
                   <div class="p-4 border-b border-black rounded-b-lg">
                     <a href="/showTeks-guest/{{ $posting->slug }}" class="cursor-pointer line-clamp-3 text-md/relaxed text-gray-500">
-                      {{ Str::limit($posting->deskripsi, 150) }}
+                      {!! Str::limit($posting->deskripsi, 350) !!}
                     </a>
                     <div class="flex items-center mt-4">
                       <button data-modal-target="modal-login" data-modal-toggle="modal-login" class="text-black mr-3">

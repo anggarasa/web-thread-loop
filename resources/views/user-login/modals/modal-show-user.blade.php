@@ -50,7 +50,7 @@
           <div class="overflow-y-scroll max-h-[30vh]">
             <div class="mb-5 pb-1">
               <p class="text-base leading-relaxed text-gray-500">
-                {{ $post->deskripsi }}
+                {!! $post->deskripsi !!}
               </p>
             </div>
             <!-- Komentar -->

@@ -24,6 +24,19 @@
     .inactive {
         color: gray;
     }
+
+    /* trix-toolbar button[title="AttachFiles"], */
+    /* trix-toolbar button[title="Bold"],
+    trix-toolbar button[title="Italic"],
+    trix-toolbar button[title="Strikethrough"], */
+    /* trix-toolbar button[title="Quote"], */
+    /* trix-toolbar button[title="Code"], */
+    /* trix-toolbar button[title="Heading"], */
+    /* trix-toolbar button[title="Link"], */
+    /* trix-toolbar button[title="Bullets"], */
+    /* trix-toolbar button[title="Numbers"], { */
+        /* display: none; */
+    /* } */
 </style>
 
 {{-- tailwind --}}
@@ -92,6 +105,10 @@
         plugins: [require("flowbite/plugin")],
     }
 </script> --}}
+
+{{-- TrixEditor --}}
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+<script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
 
 {{-- SweetAlert --}}
 @include('sweetalert::alert')

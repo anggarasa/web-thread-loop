@@ -18,9 +18,9 @@
           <div class="w-full max-w-md">
             <div class="flex items-center mb-4">
               @if (auth()->user()->profile_image)
-              <img src="{{ asset('storage/'. auth()->user()->profile_image) }}" alt="{{ auth()->user()->username }}" class="w-10 h-10 rounded-full">
+              <img src="{{ asset('storage/'. auth()->user()->profile_image) }}" alt="{{ auth()->user()->username }}" class="w-10 h-10 rounded-full object-cover">
               @else
-              <img src="/imgs/avatar.png" alt="{{ auth()->user()->username }}" class="w-10 h-10 rounded-full">
+              <img src="/imgs/avatar.png" alt="{{ auth()->user()->username }}" class="w-10 h-10 rounded-full object-cover">
               @endif
               <a href="/profile-user/{{ auth()->user()->username }}" class="ml-2 font-bold">{{ auth()->user()->username }}</a>
             </div>
@@ -34,7 +34,8 @@
               </button>
             </div>
 
-            <textarea name="deskripsi" class="w-full p-2 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="Mulai utas..." required></textarea>
+            <input id="deskripsi" name="deskripsi" type="hidden" class="w-full p-2 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="Mulai utas..." required></input>
+            <trix-editor class="overflow-y-scroll max-h-24" input="deskripsi"></trix-editor>
 
             <!-- File Upload Buttons -->
             <div class="flex justify-between items-center mt-2">
@@ -57,6 +58,25 @@
     </div>
   </div>
 </div>
+
+{{-- trixeditor --}}
+<script>
+  document.addEventListener("trix-initialize", function(event) {
+      var toolbar = event.target.toolbarElement;
+      
+      // Hapus fitur-fitur yang tidak diinginkan
+      var buttonsToRemove = [
+          "attachFiles", // Attach files
+      ];
+
+      buttonsToRemove.forEach(function(action) {
+          var button = toolbar.querySelector(`button[data-trix-action='${action}']`);
+          if (button) {
+              button.remove();
+          }
+      });
+  });
+</script>
 
 <script>
   function previewImage(event) {

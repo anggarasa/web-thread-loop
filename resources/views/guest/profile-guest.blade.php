@@ -6,9 +6,9 @@
     <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
         <!-- Gambar profil -->
         @if ($user->profile_image)
-            <img src="{{ asset('storage/'. $user->profile_image) }}" alt="Gambar Profil" class="w-20 h-20 rounded-full border-2 border-gray-300">
+            <img src="{{ asset('storage/'. $user->profile_image) }}" alt="Gambar Profil" class="w-20 h-20 rounded-full object-cover border-2 border-gray-300">
         @else
-            <img src="/imgs/avatar.png" alt="Gambar Profil" class="w-20 h-20 rounded-full border-2 border-gray-300">
+            <img src="/imgs/avatar.png" alt="Gambar Profil" class="w-20 h-20 rounded-full object-cover border-2 border-gray-300">
         @endif
     
         <!-- Informasi profil dan tombol edit -->
@@ -203,7 +203,7 @@
 
                             <a href="/showTeks-guest/{{ $tek->slug }}" class="mb-5 pb-1">
                                 <p class="text-base leading-relaxed text-gray-500">
-                                    {{ Str::limit($tek->deskripsi, 350) }}
+                                    {!! $tek->excerpt !!}
                                 </p>
                             </a>
 

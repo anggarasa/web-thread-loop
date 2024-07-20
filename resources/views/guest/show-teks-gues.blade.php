@@ -41,7 +41,7 @@
           </div>
 
           <div class="mt-4">
-              <p class="text-gray-800 text-base md:text-lg">{{ $tek->deskripsi }}</p>
+              <p class="text-gray-800 text-base md:text-lg">{!! $tek->deskripsi !!}</p>
           </div>
 
           <div class="flex items-center justify-start mt-6">

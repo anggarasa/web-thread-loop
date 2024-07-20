@@ -3,7 +3,7 @@
     <div class="bg-white w-full flex flex-col justify-center gap-5 px-3 md:px-16 lg:px-28 text-[#161931]">
     <!-- Back to Home Button -->
     <div class="absolute top-4 left-4 lg:left-64 p-4">
-        <a href="{{ url()->previous() }}" class="text-black font-bold hover:text-gray-800">
+        <a href="/profile-user" class="text-black font-bold hover:text-gray-800">
           ← Kembali
         </a>
     </div>

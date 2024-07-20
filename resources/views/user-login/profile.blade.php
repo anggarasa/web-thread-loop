@@ -5,9 +5,9 @@
     <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
         <!-- Gambar profil -->
         @if ($user->profile_image)
-            <img src="{{ asset('storage/'. $user->profile_image) }}" alt="Gambar Profil" class="w-20 h-20 rounded-full border-2 border-gray-300">
+            <img src="{{ asset('storage/'. $user->profile_image) }}" alt="Gambar Profil" class="w-20 h-20 rounded-full object-cover border-2 border-gray-300">
         @else
-            <img src="/imgs/avatar.png" alt="Gambar Profil" class="w-20 h-20 rounded-full border-2 border-gray-300">
+            <img src="/imgs/avatar.png" alt="Gambar Profil" class="w-20 h-20 rounded-full object-cover border-2 border-gray-300">
         @endif
     
         <!-- Informasi profil dan tombol edit -->
@@ -250,15 +250,17 @@
                             </div>
 
                             <a href="/showTeks/{{ $tek->slug }}" class="mb-5 pb-1">
-                                <p class="text-base leading-relaxed text-gray-500">
-                                    {{ Str::limit($tek->deskripsi, 350) }}
-                                </p>
+                                <div class="text-base leading-relaxed text-gray-500">
+                                    {!! $tek->excerpt !!}
+                                </div>
                             </a>
 
                             <div class="flex items-center justify-between mt-6">
                                 <div class="flex ml-5 items-center">
                                     <button id="like-button-{{ $tek->id }}" class="like-button text-black mr-3" data-id="{{ $tek->id }}">
-                                        <svg class="w-6 h-6 fill-current transition duration-500 ease-in-out transform {{ $tek->isLikedBy(auth()->user()) ? 'text-red-600' : 'text-black' }}" id="like-icon-{{ $tek->id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.5 3.5 5 5.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5 18.5 5 20 6.5 20 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                        <svg class="w-6 h-6 fill-current transition duration-500 ease-in-out transform {{ $tek->isLikedBy(auth()->user()) ? 'text-red-600' : 'text-black' }}" id="like-icon-{{ $tek->id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.5 3.5 5 5.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5 18.5 5 20 6.5 20 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
                                         <span id="likes-count-{{ $tek->id }}">{{ $tek->likes->count() }}</span>
                                     </button>
                                     <a href="/showTeks/{{ $tek->slug }}" class="text-black text-center">
@@ -268,7 +270,7 @@
                                     </a>
                                 </div>
 
-                                <div class="flex items-center">
+                                <div class="flex items-center ml-auto">
                                     @if ($currentUser && $currentUser->id === $user->id)
                                         <form action="{{ route('posting.destroy', $tek->id) }}" method="POST" onsubmit="return confirmDelete(event)">
                                             @csrf

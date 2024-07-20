@@ -8,9 +8,9 @@
             <div class="flex items-center border-b border-black justify-between {{ $activity->is_read ? 'bg-white' : 'bg-gray-100' }} p-4 rounded-lg">
                 <div class="flex items-center">
                     @if ($activity->user->profile_image)
-                        <img src="{{ asset('storage/'. $activity->user->profile_image) }}" alt="{{ $activity->user->username }}" class="w-10 h-10 rounded-full">
+                        <img src="{{ asset('storage/'. $activity->user->profile_image) }}" alt="{{ $activity->user->username }}" class="w-10 h-10 rounded-full object-cover">
                     @else
-                        <img src="/imgs/avatar.png" alt="{{ $activity->user->profile_image }}" class="w-10 h-10 rounded-full">
+                        <img src="/imgs/avatar.png" alt="{{ $activity->user->profile_image }}" class="w-10 h-10 rounded-full object-cover">
                     @endif
                     <div class="ml-3">
                         @if ($activity->type == 'follow')

@@ -76,6 +76,16 @@
                 plugins: [require("flowbite/plugin")],
             }
         </script> --}}
+
+        <style>
+            .active {
+                color: black;
+                border-bottom: 2px solid black;
+            }
+            .inactive {
+                color: gray;
+            }
+        </style>
     </head>
     <body class="bg-white">
         

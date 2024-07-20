@@ -9,62 +9,64 @@
                 <!-- Articles -->
                 @foreach ($posts as $posting)
                     @if ($posting->posting_image || $posting->posting_video)
-                        <article class="overflow-hidden px-5 my-5 rounded-b-lg transition">
-                            <div class="flex items-center lg:mx-20 lg:p-3 lg:mb-0 mb-5 justify-between">
-                                <div class="flex items-center">
-                                    @if ($posting->user->profile_image)
-                                    <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
-                                    @else
-                                    <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
-                                    @endif
-                                    <a href="/profile-user/{{ $posting->user->username }}" class="font-bold text-gray-700 cursor-pointer" tabindex="0" role="link">{{ $posting->user->username }}</a>
-                                </div>
-                                <p class="text-black text-xs md:text-sm">{{ $posting->created_at->diffForHumans() }}</p>
+                    <article class="overflow-hidden px-5 my-5 rounded-b-lg transition">
+                        <div class="flex items-center lg:mx-20 lg:p-3 lg:mb-0 mb-5 justify-between">
+                            <div class="flex items-center">
+                                @if ($posting->user->profile_image)
+                                    <img class="w-8 h-8 rounded-full object-cover mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
+                                @else
+                                    <img class="w-8 h-8 rounded-full object-cover mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
+                                @endif
+                                <a href="/profile-user/{{ $posting->user->username }}" class="font-bold text-gray-700 cursor-pointer" tabindex="0" role="link">{{ $posting->user->username }}</a>
                             </div>
-
-                            <div class="flex items-center justify-center">
-                                @if (Str::endsWith($posting->posting_image, ['.jpg', '.jpeg', '.png']))
-                                    <img
+                            <p class="text-black text-xs md:text-sm">{{ $posting->created_at->diffForHumans() }}</p>
+                        </div>
+                    
+                        <div class="flex items-center justify-center">
+                            @if (Str::endsWith($posting->posting_image, ['.jpg', '.jpeg', '.png']))
+                                <img
                                     alt=""
                                     src="{{ asset('storage/'. $posting->posting_image) }}"
                                     class="h-2/5 w-full lg:w-2/5 rounded-lg object-cover"
-                                    />
-                                @elseif (Str::endsWith($posting->posting_video, '.mp4'))
-                                    <video
+                                />
+                            @elseif (Str::endsWith($posting->posting_video, '.mp4'))
+                                <video
                                     controls
                                     class="h-2/5 w-full lg:w-2/5 rounded-lg"
-                                    >
+                                >
                                     <source src="{{ asset('storage/'. $posting->posting_video) }}" type="video/mp4">
-                                    </video>
-                                @endif
+                                </video>
+                            @endif
+                        </div>
+                    
+                        <div class="bg-white p-4 rounded-b-lg border-b border-black lg:mx-24 sm:p-6">
+                            <div class="flex mt-5 items-center">
+                                <button id="like-button-{{ $posting->id }}" class="like-button text-black mr-3" data-id="{{ $posting->id }}">
+                                    <svg class="w-6 h-6 fill-current transition duration-500 ease-in-out transform {{ $posting->isLikedBy(auth()->user()) ? 'text-red-600' : 'text-black' }}" id="like-icon-{{ $posting->id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.5 3.5 5 5.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5 18.5 5 20 6.5 20 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                    <span id="likes-count-{{ $posting->id }}">{{ $posting->likes->count() }}</span>
+                                </button>
+                                <button type="button" data-modal-target="showUser{{ $posting->id }}" data-modal-toggle="showUser{{ $posting->id }}" class="cursor-pointer text-black text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M7.29117 20.8242L2 22L3.17581 16.7088C2.42544 15.3056 2 13.7025 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C10.2975 22 8.6944 21.5746 7.29117 20.8242ZM7.58075 18.711L8.23428 19.0605C9.38248 19.6745 10.6655 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 13.3345 4.32549 14.6175 4.93949 15.7657L5.28896 16.4192L4.63416 19.3658L7.58075 18.711Z"/>
+                                    </svg> {{ $posting->comments->count() }}
+                                </button>
                             </div>
-
-                            <div class="bg-white p-4 rounded-b-lg border-b border-black lg:mx-24 sm:p-6">
-                                <div class="flex mt-5 items-center">
-                                    <button id="like-button-{{ $posting->id }}" class="like-button text-black mr-3" data-id="{{ $posting->id }}">
-                                        <svg class="w-6 h-6 fill-current transition duration-500 ease-in-out transform {{ $posting->isLikedBy(auth()->user()) ? 'text-red-600' : 'text-black' }}" id="like-icon-{{ $posting->id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.5 3.5 5 5.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5 18.5 5 20 6.5 20 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                                        <span id="likes-count-{{ $posting->id }}">{{ $posting->likes->count() }}</span>
-                                    </button>
-                                    <button type="button" data-modal-target="showUser{{ $posting->id }}" data-modal-toggle="showUser{{ $posting->id }}" class="cursor-pointer text-black text-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M7.29117 20.8242L2 22L3.17581 16.7088C2.42544 15.3056 2 13.7025 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C10.2975 22 8.6944 21.5746 7.29117 20.8242ZM7.58075 18.711L8.23428 19.0605C9.38248 19.6745 10.6655 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 13.3345 4.32549 14.6175 4.93949 15.7657L5.28896 16.4192L4.63416 19.3658L7.58075 18.711Z"></path>
-                                        </svg> {{ $posting->comments->count() }}
-                                    </button>
-                                </div>
-
-                                <p data-modal-target="showUser{{ $posting->id }}" data-modal-toggle="showUser{{ $posting->id }}" class="mt-2 cursor-pointer line-clamp-3 text-md/relaxed text-gray-500">
-                                    {{ Str::limit($posting->deskripsi, 150) }}
-                                </p>
-                            </div>
-                        </article>
+                    
+                            <button data-modal-target="showUser{{ $posting->id }}" data-modal-toggle="showUser{{ $posting->id }}" class="mt-2 cursor-pointer line-clamp-3 text-md/relaxed text-gray-500">
+                                {!! Str::limit($posting->deskripsi, 1000) !!}
+                            </button>
+                        </div>
+                    </article>
                     @else
                         <article class="overflow-hidden px-5 my-5 rounded-b-lg transition lg:mx-20 lg:p-3 lg:mb-0 mb-5">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
                                     @if ($posting->user->profile_image)
-                                        <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="Author Name" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
+                                        <img class="w-8 h-8 rounded-full object-cover mr-4 avatar" data-tippy-content="Author Name" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
                                     @else
-                                        <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="Author Name" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
+                                        <img class="w-8 h-8 rounded-full object-cover mr-4 avatar" data-tippy-content="Author Name" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
                                     @endif
                                     <a href="/profile-user/{{ $posting->user->username }}" class="font-bold text-gray-700 cursor-pointer" tabindex="0" role="link">{{ $posting->user->username }}</a>
                                 </div>
@@ -73,7 +75,7 @@
 
                             <div class="bg-white p-4 rounded-b-lg border-b border-black sm:p-6">
                                 <a href="/showTeks/{{ $posting->slug }}" class=" line-clamp-3 text-md/relaxed text-gray-500">
-                                    {{ Str::limit($posting->deskripsi, 500) }}
+                                    {!! Str::limit($posting->deskripsi, 1000) !!}
                                 </a>
 
                                 <div class="flex mt-5 items-center">
@@ -98,9 +100,9 @@
                 <div class="bg-white p-4 rounded-lg shadow">
                     <div class="flex items-center mb-4">
                         @if (auth()->user()->profile_image)
-                            <img class="w-10 h-10 rounded-full mr-3" src="{{ asset('storage/'. auth()->user()->profile_image) }}" alt="{{ auth()->user()->username }}">
+                            <img class="w-10 h-10 rounded-full object-cover mr-3" src="{{ asset('storage/'. auth()->user()->profile_image) }}" alt="{{ auth()->user()->username }}">
                         @else
-                        <img class="w-10 h-10 rounded-full mr-3" src="/imgs/avatar.png" alt="{{ auth()->user()->username }}">
+                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="/imgs/avatar.png" alt="{{ auth()->user()->username }}">
                         @endif
                         <div class="flex-1">
                             <p class="font-bold text-gray-700">{{ auth()->user()->username }}</p>
@@ -113,9 +115,9 @@
                             <li class="flex items-center mb-2 relative">
                                 <div class="bg-gray-300 w-10 h-10 rounded-full mr-3">
                                     @if ($user->profile_image)
-                                        <img src="{{ asset('storage/'. $user->profile_image) }}" data-popover-target="detail-user-modal{{ $user->id }}" class="w-full h-full rounded-full cursor-pointer profile-image" alt="{{ $user->username }}">
+                                        <img src="{{ asset('storage/'. $user->profile_image) }}" data-popover-target="detail-user-modal{{ $user->id }}" class="w-full h-full rounded-full object-cover cursor-pointer profile-image" alt="{{ $user->username }}">
                                     @else
-                                        <img src="/imgs/avatar.png" data-popover-target="detail-user-modal{{ $user->id }}" class="w-full h-full rounded-full cursor-pointer profile-image" alt="{{ $user->username }}">
+                                        <img src="/imgs/avatar.png" data-popover-target="detail-user-modal{{ $user->id }}" class="w-full h-full rounded-full object-cover cursor-pointer profile-image" alt="{{ $user->username }}">
                                     @endif
                                 </div>
                                 <div class="flex-1">
@@ -133,9 +135,9 @@
                                     <div class="flex items-center justify-between mb-2">
                                         <a href="/profile-user/{{ $user->username }}">
                                             @if ($user->profile_image)
-                                            <img class="w-10 h-10 rounded-full" src="{{ asset('storage/'. $user->profile_image) }}" alt="{{ $user->username }}">
+                                            <img class="w-10 h-10 rounded-full object-cover" src="{{ asset('storage/'. $user->profile_image) }}" alt="{{ $user->username }}">
                                             @else
-                                            <img class="w-10 h-10 rounded-full" src="/imgs/avatar.png" alt="{{ $user->username }}">
+                                            <img class="w-10 h-10 rounded-full object-cover" src="/imgs/avatar.png" alt="{{ $user->username }}">
                                             @endif
                                         </a>
                                         <div>
@@ -380,6 +382,16 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const videos = document.querySelectorAll('video');
+
+        videos.forEach(video => {
+            video.addEventListener('play', () => {
+                videos.forEach(v => {
+                    if (v !== video) {
+                        v.pause();
+                    }
+                });
+            });
+        });
 
         if ('IntersectionObserver' in window) {
             const observer = new IntersectionObserver((entries) => {
