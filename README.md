@@ -1,6 +1,6 @@
 # ThreadLoop
 
-<p align="center"><a target="_blank"><img src="https://github.com/anggarasa/web-thread-loop/tree/main/public/imgs/bg-login-threadloop.png" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a target="_blank"><img src="https://raw.githubusercontent.com/anggarasa/web-thread-loop/main/public/imgs/bg-login-threadloop.png" width="400" alt="ThreadLoop Logo"></a></p>
 
 ## Tentang ThreadLoop
 
