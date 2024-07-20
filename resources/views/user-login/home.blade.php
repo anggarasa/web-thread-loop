@@ -13,9 +13,9 @@
                         <div class="flex items-center lg:mx-20 lg:p-3 lg:mb-0 mb-5 justify-between">
                             <div class="flex items-center">
                                 @if ($posting->user->profile_image)
-                                    <img class="w-8 h-8 rounded-full object-cover mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
+                                    <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="{{ asset('storage/'. $posting->user->profile_image) }}" alt="{{ $posting->user->username }}">
                                 @else
-                                    <img class="w-8 h-8 rounded-full object-cover mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
+                                    <img class="w-8 h-8 rounded-full mr-4 avatar" data-tippy-content="{{ $posting->user->name }}" src="/imgs/avatar.png" alt="{{ $posting->user->username }}">
                                 @endif
                                 <a href="/profile-user/{{ $posting->user->username }}" class="font-bold text-gray-700 cursor-pointer" tabindex="0" role="link">{{ $posting->user->username }}</a>
                             </div>
@@ -54,9 +54,9 @@
                                 </button>
                             </div>
                     
-                            <button data-modal-target="showUser{{ $posting->id }}" data-modal-toggle="showUser{{ $posting->id }}" class="mt-2 cursor-pointer line-clamp-3 text-md/relaxed text-gray-500">
+                            <a data-modal-target="showUser{{ $posting->id }}" data-modal-toggle="showUser{{ $posting->id }}" class="mt-2 cursor-pointer line-clamp-3 text-md/relaxed text-gray-500">
                                 {!! Str::limit($posting->deskripsi, 1000) !!}
-                            </button>
+                            </a>
                         </div>
                     </article>
                     @else
@@ -382,27 +382,46 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const videos = document.querySelectorAll('video');
+        let currentlyPlayingVideo = null;
 
-        videos.forEach(video => {
-            video.addEventListener('play', () => {
-                videos.forEach(v => {
-                    if (v !== video) {
-                        v.pause();
+        function checkVideoVisibility() {
+            videos.forEach(video => {
+                const rect = video.getBoundingClientRect();
+                const middle = rect.top + (rect.height / 2);
+
+                if (middle >= 0 && middle <= window.innerHeight) {
+                    if (currentlyPlayingVideo && currentlyPlayingVideo !== video) {
+                        currentlyPlayingVideo.pause();
                     }
-                });
+                    currentlyPlayingVideo = video;
+                    video.play();
+                } else {
+                    video.pause();
+                }
             });
-        });
+        }
 
         if ('IntersectionObserver' in window) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     const video = entry.target;
                     if (entry.isIntersecting) {
-                        video.play();
+                        const rect = video.getBoundingClientRect();
+                        const middle = rect.top + (rect.height / 2);
+
+                        if (middle >= 0 && middle <= window.innerHeight) {
+                            if (currentlyPlayingVideo && currentlyPlayingVideo !== video) {
+                                currentlyPlayingVideo.pause();
+                            }
+                            currentlyPlayingVideo = video;
+                            video.play();
+                        }
                     } else {
                         video.pause();
                     }
                 });
+            }, {
+                threshold: 0.5 // Adjust as needed for when you want the video to play
             });
 
             videos.forEach(video => {
@@ -410,16 +429,7 @@
             });
         } else {
             // Fallback for browsers that do not support IntersectionObserver
-            window.addEventListener('scroll', function () {
-                videos.forEach(video => {
-                    const rect = video.getBoundingClientRect();
-                    if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-                        video.play();
-                    } else {
-                        video.pause();
-                    }
-                });
-            });
+            window.addEventListener('scroll', checkVideoVisibility);
         }
     });
 </script>
