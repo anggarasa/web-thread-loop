@@ -58,7 +58,7 @@
               <h4 class="text-lg font-semibold text-gray-900">Komentar</h4>
               <div class="comments-container" id="comments-container-{{ $post->id }}">
                   @forelse ($post->comments as $comment)
-                      <div class="mt-4">
+                      <div class="comment mt-4 flex justify-between items-center" id="comment-{{ $comment->id }}">
                           <div class="flex items-start">
                               @if ($comment->user->profile_image)
                                   <img class="object-cover mr-4 w-10 h-10 rounded-full" src="{{ asset('storage/'. $comment->user->profile_image) }}" alt="{{ $comment->user->username }}">
@@ -70,6 +70,9 @@
                                   <p class="text-sm text-gray-500">{{ $comment->content }}</p>
                               </div>
                           </div>
+                            <button data-posting-id="{{ $comment->posting_id }}" data-comment-id="{{ $comment->id }}" class="delete-comment-button text-white bg-black mr-4 hover:bg-gray-600 px-2 py-1 rounded">
+                              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                            </button>
                       </div>
                   @empty
                       <p class="mt-4 text-sm text-gray-500 no-comments">Belum ada komentar.</p>
@@ -113,107 +116,259 @@
 </div>
 @endforeach
 
-<script>
-  document.addEventListener('submit', async (e) => {
-    if (e.target && e.target.matches('.comment-form')) {
-        e.preventDefault();
-        const form = e.target;
-        const formData = new FormData(form);
-        const postId = form.getAttribute('data-post-id');
-        try {
-            const response = await fetch('/comments', {
-                method: 'POST',
-                body: formData,
-            });
-            if (response.ok) {
-                const data = await response.json();
-                const newComment = data.comment;
-                const user = data.user;
+{{-- Hapus Komentar --}}
+{{-- <script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.delete-comment-button').forEach(button => {
+        button.addEventListener('click', function () {
+            let postingId = this.dataset.postingId;
+            let commentId = this.dataset.commentId;
 
-                const commentsContainer = document.querySelector(`#comments-container-${postId}`);
-                const commentDiv = document.createElement('div');
-                commentDiv.classList.add('comment', 'mt-4');
-                commentDiv.innerHTML = `
-                    <div class="flex items-start">
-                        <img class="object-cover mr-4 w-10 h-10 rounded-full" src="${user.profile_image ? '/storage/' + user.profile_image : '/imgs/avatar.png'}" alt="${user.username}">
-                        <div>
-                            <p class="font-bold text-gray-700">${user.username}</p>
-                            <p class="text-sm text-gray-500">${newComment.content}</p>
-                        </div>
-                    </div>
-                `;
-                commentsContainer.prepend(commentDiv); // Menambahkan komentar baru di atas
-
-                // Menghapus teks "Belum ada komentar" jika ada
-                const noCommentsText = commentsContainer.querySelector('.no-comments');
-                if (noCommentsText) {
-                    noCommentsText.remove();
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak akan bisa mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/comment/${postingId}/${commentId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            Swal.fire(
+                                'Terhapus!',
+                                'Komentar berhasil dihapus.',
+                                'success'
+                            );
+                            // Temukan elemen komentar berdasarkan ID dan hapus jika ada
+                            let commentElement = document.getElementById(`comment-${commentId}`);
+                            if (commentElement) {
+                                commentElement.remove();
+                            }
+                        } else {
+                            Swal.fire(
+                                'Gagal!',
+                                data.message,
+                                'error'
+                            );
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire(
+                            'Gagal!',
+                            'Terjadi kesalahan.',
+                            'error'
+                        );
+                        console.error('Error:', error);
+                    });
                 }
-
-                // Mengosongkan textarea setelah komentar berhasil ditambahkan
-                form.querySelector('textarea').value = ''; 
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to post comment.',
-                });
-            }
-        } catch (error) {
-            console.error('Terjadi kesalahan:', error);
-        }
-    }
-});
-
-function confirmDelete(event) {
-    event.preventDefault(); // Prevent the form from submitting immediately
-
-    Swal.fire({
-        title: 'Apa kamu yakin?',
-        text: "Postinganmu akan di hapus secara permanen!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            event.target.submit(); // Submit the form if confirmed
-        }
+            });
+        });
     });
-}
-
-document.addEventListener('click', (event) => {
-    const target = event.target.closest('[data-modal-toggle]');
-    if (target) {
-        const modalId = target.getAttribute('data-modal-target');
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            const video = modal.querySelector('video');
-            if (video) {
-                video.setAttribute('autoplay', true);
-                video.setAttribute('loop', true);
-                video.play();
-            }
-        }
-    }
 });
+</script> --}}
 
-document.addEventListener('click', (event) => {
-    const target = event.target.closest('[data-modal-hide]');
-    if (target) {
-        const modalId = target.getAttribute('data-modal-hide');
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            const video = modal.querySelector('video');
-            if (video) {
-                video.pause();
-                video.currentTime = 0;
-                video.removeAttribute('autoplay');
-                video.removeAttribute('loop');
-            }
-        }
-    }
-});
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Event listener untuk tombol hapus komentar
+      function addDeleteCommentEventListener(button) {
+          button.addEventListener('click', function () {
+              let postingId = this.dataset.postingId;
+              let commentId = this.dataset.commentId;
 
+              Swal.fire({
+                  title: 'Apakah Anda yakin?',
+                  text: "Anda tidak akan bisa mengembalikan ini!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Ya, hapus!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      fetch(`/comment/${postingId}/${commentId}`, {
+                          method: 'DELETE',
+                          headers: {
+                              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                              'Content-Type': 'application/json'
+                          }
+                      })
+                      .then(response => response.json())
+                      .then(data => {
+                          if (data.status === 'success') {
+                              Swal.fire(
+                                  'Terhapus!',
+                                  'Komentar berhasil dihapus.',
+                                  'success'
+                              );
+                              // Temukan elemen komentar berdasarkan ID dan hapus jika ada
+                              let commentElement = document.getElementById(`comment-${commentId}`);
+                              if (commentElement) {
+                                  commentElement.remove();
+                              }
+                          } else {
+                              Swal.fire(
+                                  'Gagal!',
+                                  data.message,
+                                  'error'
+                              );
+                          }
+                      })
+                      .catch(error => {
+                          Swal.fire(
+                              'Gagal!',
+                              'Terjadi kesalahan.',
+                              'error'
+                          );
+                          console.error('Error:', error);
+                      });
+                  }
+              });
+          });
+      }
+
+      // Tambahkan event listener ke tombol hapus komentar yang sudah ada
+      document.querySelectorAll('.delete-comment-button').forEach(button => {
+          addDeleteCommentEventListener(button);
+      });
+
+      // Event listener untuk form komentar
+      document.addEventListener('submit', async (e) => {
+          if (e.target && e.target.matches('.comment-form')) {
+              e.preventDefault();
+              const form = e.target;
+              const formData = new FormData(form);
+              const postId = form.getAttribute('data-post-id');
+              try {
+                  const response = await fetch('/comments', {
+                      method: 'POST',
+                      body: formData,
+                  });
+                  if (response.ok) {
+                      const data = await response.json();
+                      const newComment = data.comment;
+                      const user = data.user;
+
+                      const commentsContainer = document.querySelector(`#comments-container-${postId}`);
+                      const commentDiv = document.createElement('div');
+                      commentDiv.classList.add('comment', 'mt-4', 'flex', 'justify-between', 'items-center');
+                      commentDiv.id = `comment-${newComment.id}`;
+                      commentDiv.innerHTML = `
+                          <div class="flex items-start">
+                              <img class="object-cover mr-4 w-10 h-10 rounded-full" src="${user.profile_image ? '/storage/' + user.profile_image : '/imgs/avatar.png'}" alt="${user.username}">
+                              <div>
+                                  <p class="font-bold text-gray-700">${user.username}</p>
+                                  <p class="text-sm text-gray-500">${newComment.content}</p>
+                              </div>
+                          </div>
+                          <button data-posting-id="${newComment.posting_id}" data-comment-id="${newComment.id}" class="delete-comment-button text-white bg-black mr-4 hover:bg-gray-600 px-2 py-1 rounded">
+                              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                          </button>
+                      `;
+                      commentsContainer.prepend(commentDiv); // Menambahkan komentar baru di atas
+
+                      // Menghapus teks "Belum ada komentar" jika ada
+                      const noCommentsText = commentsContainer.querySelector('.no-comments');
+                      if (noCommentsText) {
+                          noCommentsText.remove();
+                      }
+
+                      // Mengosongkan textarea setelah komentar berhasil ditambahkan
+                      form.querySelector('textarea').value = '';
+
+                      // Tambahkan event listener untuk tombol hapus komentar baru
+                      const newDeleteButton = commentDiv.querySelector('.delete-comment-button');
+                      addDeleteCommentEventListener(newDeleteButton);
+                  } else {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Error',
+                          text: 'Failed to post comment.',
+                      });
+                  }
+              } catch (error) {
+                  console.error('Terjadi kesalahan:', error);
+              }
+          }
+      });
+  });
+
+
+  function confirmDelete(event) {
+      event.preventDefault(); // Prevent the form from submitting immediately
+
+      Swal.fire({
+          title: 'Apa kamu yakin?',
+          text: "Postinganmu akan di hapus secara permanen!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              event.target.submit(); // Submit the form if confirmed
+          }
+      });
+  }
+
+  function confirmDeleteComment(event) {
+      event.preventDefault(); // Prevent the form from submitting immediately
+
+      Swal.fire({
+          title: 'Apa kamu yakin?',
+          text: "Komentarmu akan di hapus secara permanen!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              event.target.submit(); // Submit the form if confirmed
+          }
+      });
+  }
+
+  document.addEventListener('click', (event) => {
+      const target = event.target.closest('[data-modal-toggle]');
+      if (target) {
+          const modalId = target.getAttribute('data-modal-target');
+          const modal = document.getElementById(modalId);
+          if (modal) {
+              const video = modal.querySelector('video');
+              if (video) {
+                  video.setAttribute('autoplay', true);
+                  video.setAttribute('loop', true);
+                  video.play();
+              }
+          }
+      }
+  });
+
+  document.addEventListener('click', (event) => {
+      const target = event.target.closest('[data-modal-hide]');
+      if (target) {
+          const modalId = target.getAttribute('data-modal-hide');
+          const modal = document.getElementById(modalId);
+          if (modal) {
+              const video = modal.querySelector('video');
+              if (video) {
+                  video.pause();
+                  video.currentTime = 0;
+                  video.removeAttribute('autoplay');
+                  video.removeAttribute('loop');
+              }
+          }
+      }
+  });
 </script>

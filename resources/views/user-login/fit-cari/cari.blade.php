@@ -9,7 +9,7 @@
           <label for="simple-search" class="sr-only">Search</label>
           <div class="relative w-full">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <ion-icon name="person-outline" class="w-4 h-4 text-gray-500"></ion-icon>
+                  <ion-icon name="search-outline" class="w-4 h-4 text-gray-500"></ion-icon>
               </div>
               <input type="search" id="simple-search" name="query" class="bg-gray-50 border border-gray-800 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full pl-10 py-2.5" placeholder="Search..." value="{{ request('query') }}" autocomplete="off" />
           </div>
@@ -58,15 +58,15 @@
                         </svg>
                         <span id="likes-count-{{ $posting->id }}">{{ $posting->likes->count() }}</span>
                       </button>
-                      <button type="button" data-modal-target="showUser{{ $posting->id }}" data-modal-toggle="showUser{{ $posting->id }}" class="cursor-pointer text-black text-center">
+                      <a href="/showTeks/{{ $posting->slug }}" class="cursor-pointer text-black text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M7.29117 20.8242L2 22L3.17581 16.7088C2.42544 15.3056 2 13.7025 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C10.2975 22 8.6944 21.5746 7.29117 20.8242ZM7.58075 18.711L8.23428 19.0605C9.38248 19.6745 10.6655 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 13.3345 4.32549 14.6175 4.93949 15.7657L5.28896 16.4192L4.63416 19.3658L7.58075 18.711Z"></path>
                         </svg> {{ $posting->comments->count() }}
-                      </button>
+                      </a>
                     </div>
-                    <p data-modal-target="showUser{{ $posting->id }}" data-modal-toggle="showUser{{ $posting->id }}" class="cursor-pointer line-clamp-3 text-md/relaxed text-gray-500">
+                    <a href="/showTeks/{{ $posting->slug }}" class="cursor-pointer line-clamp-3 text-md/relaxed text-gray-500">
                       {!! Str::limit($posting->deskripsi, 350) !!}
-                    </p>
+                    </a>
                   </div>
                 </article>
               @else

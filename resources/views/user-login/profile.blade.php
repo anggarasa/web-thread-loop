@@ -47,7 +47,7 @@
                     <a href="{{ route('profile.edit') }}" class="block px-4 py-2 hover:bg-gray-100">Edit Profile</a>
                 </li>
                 <li>
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}" onsubmit="return confirmLogout(event)">
                         @csrf
                         <button type="submit" class="block text-red-600 px-4 py-2 hover:bg-gray-100">Log out</button>
                     </form>
@@ -302,6 +302,24 @@
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                event.target.submit(); // Submit the form if confirmed
+            }
+        });
+    }
+    
+    function confirmLogout(event) {
+        event.preventDefault(); // Prevent the form from submitting immediately
+
+        Swal.fire({
+            title: 'Apa kamu yakin?',
+            text: "Jika kamu keluar, kamu harus login ulang lagi!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Logout!'
         }).then((result) => {
             if (result.isConfirmed) {
                 event.target.submit(); // Submit the form if confirmed

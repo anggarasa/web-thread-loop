@@ -12,7 +12,7 @@
           <label for="simple-search" class="sr-only">Search</label>
           <div class="relative w-full">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <ion-icon name="person-outline" class="w-4 h-4 text-gray-500"></ion-icon>
+                  <ion-icon name="search-outline" class="w-4 h-4 text-gray-500"></ion-icon>
               </div>
               <input type="search" id="simple-search" name="query" class="bg-gray-50 border border-gray-800 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full pl-10 py-2.5" placeholder="Search..." value="{{ request('query') }}" autocomplete="off" />
           </div>

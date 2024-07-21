@@ -23,7 +23,7 @@
           <!-- Modal body -->
           <div class="p-4 md:p-5 overflow-y-scroll max-h-80 space-y-4">
               <p class="text-base leading-relaxed text-gray-800">
-                {{ $tek->deskripsi }}
+                {!! $tek->deskripsi !!}
               </p>
           </div>
           <!-- Modal footer -->

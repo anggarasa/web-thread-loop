@@ -138,7 +138,8 @@ Route::middleware(['auth', 'verified', 'web', CheckNewActivities::class])->group
     // Comment
     Route::post('/comments', [CommentController::class, 'store'])->name('comment.store');
     Route::post('/comments-teks', [CommentController::class, 'storeTeks']);
-    // Route::delete('/comment/{posting_id}/{id}', [CommentController::class, 'commentDestroy'])->name('comment.destroy');
+    Route::delete('/comment/{postingId}/{commentId}', [CommentController::class, 'commentDestroy'])->name('comment.destroy');
+    Route::delete('/comment-teks/{posting}/{comment}', [CommentController::class, 'commentDestroyTeks'])->name('comment.destroy.teks');
 
     // Like & Unlike
     Route::post('/like', [LikeController::class, 'like'])->name('like');

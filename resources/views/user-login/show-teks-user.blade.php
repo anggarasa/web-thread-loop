@@ -62,7 +62,7 @@
                 <h4 class="text-lg font-semibold text-gray-900">Komentar</h4>
                 <div class="comments-container" id="comments-container-{{ $tek->id }}">
                     @forelse ($tek->comments as $comment)
-                        <div class="mt-4">
+                        <div class="mt-4 flex justify-between items-center" id="comment-{{ $comment->id }}">
                             <div class="flex items-start">
                                 @if ($comment->user->profile_image)
                                     <img class="object-cover mr-4 w-10 h-10 rounded-full" src="{{ asset('storage/'. $comment->user->profile_image) }}" alt="{{ $comment->user->username }}">
@@ -74,6 +74,15 @@
                                     <p class="text-sm text-gray-500">{{ $comment->content }}</p>
                                 </div>
                             </div>
+                            <form action="{{ route('comment.destroy.teks', ['posting' => $comment->posting_id, 'comment' => $comment->id]) }}" method="POST" onsubmit="return confirmDeleteComment(event)">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-white bg-black mr-4 hover:bg-gray-600 px-2 py-1 rounded">
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
+                            </form>
                         </div>
                     @empty
                         <p class="mt-4 text-sm text-gray-500 no-comments">Belum ada komentar.</p>
@@ -87,6 +96,25 @@
 </x-layout-auth>
 
 <script>
+      function confirmDeleteComment(event) {
+        event.preventDefault(); // Prevent the form from submitting immediately
+
+        Swal.fire({
+            title: 'Apa kamu yakin?',
+            text: "Komentarmu akan di hapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                event.target.submit(); // Submit the form if confirmed
+            }
+        });
+    }
+    
+    
     $(document).ready(function() {
         function handleLikeButtonClick(button) {
             var posting_id = $(button).data('id');
